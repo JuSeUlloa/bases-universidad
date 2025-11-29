@@ -118,6 +118,25 @@ if os.path.exists(db_filename):
 
     print(df_curso_estudiantes)
     print('✅ 💻 ---------------------------------------------- ✅ 💻')
+    
+    # Comodin poblar el campo nota_final
+    print('✅ 💻 ------------------- Comodin ----------------------- ✅ 💻')
+    df_notas_vacias =pd.read_sql_query("SELECT count(id_inscripcion) notas_vacias FROM inscripciones " \
+    "WHERE nota_final is null ", conn)
+    
+    print(df_notas_vacias)
+    if (int(df_notas_vacias['notas_vacias'][0])>0):
+         conn.execute("UPDATE inscripciones SET nota_final = ROUND(1.0 + (4.0) * (ABS(RANDOM()) / 9223372036854775807.0),1) " \
+         " WHERE nota_final is null;")
+         conn.commit()
+         print("Notas actualizadas en las inscripciones")
+    else:
+         print("No hay notas por ingresar...")
+         
+    print('✅ 💻 ------------------- Comodin ----------------------- ✅ 💻')
+
+
+
     #11. Infromacion detallada Sabana de Notas
     print('✅ 💻 ---------------------------------------------- ✅ 💻')
     df_notas =pd.read_sql_query("SELECT e.nombre, e.apellido, c.nombre_curso, i.nota_final , p.nombre FROM estudiantes e " \
