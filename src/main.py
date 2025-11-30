@@ -46,7 +46,7 @@ if os.path.exists(db_filename):
     print('✅ 💻 ---------------------------------------------- ✅ 💻')
     # 3 DML INSERT INSCRIPCION
     print('✅ 💻 ---------------------------------------------- ✅ 💻')
-    fecha=dt.datetime.now().date()
+    fecha=dt.datetime.now().date() # YYYY-MM-DD
     inscripcion = (int(df_estudiante['id_estudiante'][0]), int(df_curso['id_curso'][0]), fecha)
     df_inscripcion = pd.read_sql_query(f"""SELECT * FROM inscripciones  where id_estudiante = {inscripcion[0]} and 
                                        id_curso = {inscripcion[1]}""", conn)
@@ -93,7 +93,7 @@ if os.path.exists(db_filename):
     #7. Auditoria Profesores
     print('✅ 💻 ---------------------------------------------- ✅ 💻')
     df_profesor_curso= pd.read_sql_query("SELECT p.nombre, c.nombre_curso " \
-    "FROM cursos c  RIGHT JOIN profesores p on p.id_profesor=c.id_profesor ", conn)
+    "FROM cursos c  RIGHT JOIN profesores p on p.id_profesor=c.id_profesor ", conn) 
     print(df_profesor_curso)
     print('✅ 💻 ---------------------------------------------- ✅ 💻')
     #8. Popularidad 
@@ -182,22 +182,8 @@ if os.path.exists(db_filename):
     plt.grid(axis='y', linestyle='--', alpha=0.7) # Añade una cuadrícula suave en el eje Y
     plt.show()
 
-    #Finalizar conexion.
     conn.close()
 
-
     #print(df_riesgo)
-
-
-
-
-
-
-
-
-
-
-
-
 else:
         print(f"Archivo base de datos no encontrado en la ruta {db_filename}")
